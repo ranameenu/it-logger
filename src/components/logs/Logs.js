@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LogItem from "./LogItem";
+import PreLoader from "../layout/PreLoader";
 
 const Logs = () => {
   const [logs, setLogs] = useState([]);
@@ -19,7 +20,7 @@ const Logs = () => {
   };
 
   if (loading) {
-    <h4>Loading</h4>;
+    return <PreLoader />;
   }
   return (
     <ul className="list-group ">
