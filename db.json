@@ -1,25 +1,18 @@
 {
   "logs": [
     {
-      "id": 1,
-      "message": "Changed hard drive on work station 005",
+      "message": "Hard drive change in server 001",
       "attention": false,
-      "date": "03-02-2019",
-      "tech": "Sam Smith"
+      "tech": "Sam Smith",
+      "date": "2021-06-26T21:38:41.911Z",
+      "id": 1
     },
     {
-      "id": 2,
-      "message": "Change window to linux 004",
+      "message": "Increase ram size in server 002 ",
       "attention": true,
-      "date": "07-02-2019",
-      "tech": "John Doe"
-    },
-    {
-      "id": 3,
-      "message": "Running issues in windows 003",
-      "attention": false,
-      "date": "09-02-2019",
-      "tech": "Sara Wilson"
+      "tech": "Sara Wilson",
+      "date": "2021-06-26T21:39:31.530Z",
+      "id": 2
     }
   ],
   "techs": [

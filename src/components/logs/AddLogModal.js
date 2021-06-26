@@ -1,15 +1,27 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { addLog } from "../../actions/LogActions";
+import PropTypes from "prop-types";
 
-const AddLogModal = () => {
+const AddLogModal = ({ addLog }) => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (message === "" || tech === "") {
       alert("Enter Details first");
     } else {
-      console.log(message, tech, attention);
+      const newLog = {
+        message,
+        attention,
+        tech,
+        date: new Date(),
+      };
+
+      addLog(newLog);
+      // alert(`log added by ${tech}`);
 
       //   Clear Field
       setMessage("");
@@ -93,4 +105,8 @@ const AddLogModal = () => {
   );
 };
 
-export default AddLogModal;
+AddLogModal.propTypes = {
+  addLog: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addLog })(AddLogModal);
