@@ -1,8 +1,10 @@
 import { GET_LOGS, SET_LOADING, LOGS_ERROR } from "./types";
 
+// Get Logs from server
 export const getLogs = () => async (dispatch) => {
   try {
     setLoading();
+
     const res = await fetch("http://localhost:5000/logs");
     const data = await res.json();
 
