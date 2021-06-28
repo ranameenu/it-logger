@@ -4,6 +4,9 @@ import {
   LOGS_ERROR,
   ADD_LOG,
   DELETE_LOG,
+  UPDATE_LOG,
+  SET_CURRENT,
+  CLEAR_CURRENT,
 } from "./types";
 
 // Get Logs from server
@@ -26,6 +29,7 @@ export const getLogs = () => async (dispatch) => {
   }
 };
 
+// Add Log to server
 export const addLog = (log) => async (dispatch) => {
   try {
     setLoading();
@@ -52,7 +56,6 @@ export const addLog = (log) => async (dispatch) => {
 };
 
 // Delete log
-
 export const deleteLog = (id) => async (dispatch) => {
   try {
     setLoading();
@@ -71,6 +74,47 @@ export const deleteLog = (id) => async (dispatch) => {
       payload: error.response.data,
     });
   }
+};
+
+// Update Log
+export const updateLog = (log) => async (dispatch) => {
+  try {
+    setLoading();
+
+    const res = await fetch(`http://localhost:5000/logs/${log.id}`, {
+      method: "PUT",
+      body: JSON.stringify(log),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+
+    dispatch({
+      type: UPDATE_LOG,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Set Current log
+export const setCurrent = (log) => {
+  return {
+    type: SET_CURRENT,
+    payload: log,
+  };
+};
+
+// Clear Current log
+export const clearCurrent = () => {
+  return {
+    type: CLEAR_CURRENT,
+  };
 };
 
 // set loading to true

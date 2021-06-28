@@ -2,9 +2,9 @@ import React from "react";
 import Moment from "react-moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { deleteLog } from "../../actions/LogActions";
+import { deleteLog, setCurrent } from "../../actions/LogActions";
 
-const LogItem = ({ log, deleteLog }) => {
+const LogItem = ({ log, deleteLog, setCurrent }) => {
   const onDelete = () => {
     deleteLog(log.id);
     alert("Log Deleted");
@@ -17,6 +17,7 @@ const LogItem = ({ log, deleteLog }) => {
           href="#edit-log-modal"
           data-bs-toggle="modal"
           className={`modal-trigger ${log.attention ? "text-danger" : ""}`}
+          onClick={() => setCurrent(log)}
         >
           {log.message}
         </a>
@@ -37,6 +38,7 @@ const LogItem = ({ log, deleteLog }) => {
 LogItem.propTypes = {
   log: PropTypes.object.isRequired,
   deleteLog: PropTypes.func.isRequired,
+  setCurrent: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteLog })(LogItem);
+export default connect(null, { deleteLog, setCurrent })(LogItem);

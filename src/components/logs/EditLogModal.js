@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { updateLog } from "../../actions/LogActions";
 
-const EditLogModal = () => {
+const EditLogModal = ({ updateLog, current }) => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
+
+  useEffect(() => {
+    if (current) {
+      setMessage(current.message);
+      setAttention(current.attention);
+      setTech(current.tech);
+    }
+  }, [current]);
 
   const onSubmit = () => {
     if (message === "" || tech === "") {
       alert("Enter Details first");
     } else {
-      console.log(message, tech, attention);
+      const updtLog = {
+        id: current.id,
+        message,
+        attention,
+        tech,
+        date: new Date(),
+      };
+      updateLog(updtLog);
     }
   };
 
   return (
-    <div className="modal fade" id="edit-log-modal" style={{ width: "75%" }}>
+    <div className="modal fade" id="edit-log-modal" style={{ width: "100%" }}>
       <div className="modal-dialog modal-lg">
         <div className="modal-content ">
           <div className="modal-header ">
@@ -26,7 +44,7 @@ const EditLogModal = () => {
               aria-label="Close"
             ></button>
           </div>
-          <div className="modal-body">
+          <div className="modal-body" style={{ margin: "20px 0px 200px 0px" }}>
             <div className="row">
               <div className="input-field">
                 <input
@@ -60,8 +78,8 @@ const EditLogModal = () => {
               </div>
             </div>
             <br />
-            <div className="row">
-              <div className="input-field">
+            <div className="row" style={{ margin: "20px 0px" }}>
+              <div className="input-field" style={{ padding: "0px" }}>
                 <p>
                   <label>
                     <input
@@ -88,4 +106,12 @@ const EditLogModal = () => {
   );
 };
 
-export default EditLogModal;
+EditLogModal.propTypes = {
+  updateLog: PropTypes.func.isRequired,
+  current: PropTypes.object,
+};
+const mapStateToProps = (state) => ({
+  current: state.log.current,
+});
+
+export default connect(mapStateToProps, { updateLog })(EditLogModal);
