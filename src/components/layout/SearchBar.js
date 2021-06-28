@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useRef } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { searchLogs } from "../../actions/LogActions";
 
-const SearchBar = () => {
+const SearchBar = ({ searchLogs }) => {
+  const text = useRef("");
+
+  const onChange = (e) => {
+    searchLogs(text.current.value);
+  };
   return (
     <div className="shadow bg-body rounded">
-      <nav
-        style={{ marginBottom: '30px' }}
-        className="navbar navbar-expand-lg navbar-dark bg-primary "
-      >
-        <div className="container">
-          <a className="navbar-brand w-100 m-auto" href="/">
-            <i className="bi bi-search"></i>
-          </a>
-        </div>
-      </nav>
+      <form class="search-form ">
+        <label for="search" class="form-label w-100 d-flex flex-row ">
+          <i className="bi bi-search my-auto"></i>
+          <input
+            type="text"
+            class="search-input form-control-lg w-100 border-0"
+            placeholder="Search logs..."
+            ref={text}
+            onChange={onChange}
+          />
+        </label>{" "}
+      </form>
     </div>
   );
 };
-
-export default SearchBar;
+SearchBar.prototype = {
+  searchLogs: PropTypes.func.isRequired,
+};
+export default connect(null, { searchLogs })(SearchBar);
